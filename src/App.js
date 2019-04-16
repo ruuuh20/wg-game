@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Logo from './components/Logo';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import Game from './containers/Game'
 
 import './App.css';
@@ -65,10 +65,18 @@ startGame = (e) => {
   }
 
   render() {
-    // let renderGame = null;
+    let renderGame = null;
     // if (this.state.start) {
     //   renderGame =
     // }
+    if (this.state.start) {
+      renderGame = (
+
+      <Link to='/play'>Play</Link>
+    )
+  } else {
+    renderGame = "hi"
+  }
     return (
       <div className="App">
       <BrowserRouter>
@@ -76,11 +84,13 @@ startGame = (e) => {
         {this.state.word}
         <Logo />
         <Route path ='/play' render={props => <Game {...props} word={this.state.word} />}/>
-        {this.state.start ? <Game {...this.state} /> : <h1>not started</h1>}
+        {renderGame}
       </BrowserRouter>
       </div>
     );
   }
 }
 
+
+// {this.state.start ? <Game {...this.state} startGame={this.startGame} /> : <h1>not started</h1>}
 export default App;

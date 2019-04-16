@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import GuessForm from '../components/GuessForm'
 import TheWord from '../components/TheWord';
-import ShowGuesses from '../components/ShowGuesses'
+import ShowGuesses from '../components/ShowGuesses';
+import { Link } from 'react-router-dom';
 
 class Game extends Component {
 
@@ -12,7 +13,8 @@ class Game extends Component {
     wordLetters: this.props.word.split(''),
     correct: [],
     repeat: '',
-    won: false
+    won: false,
+    gameStatus: ''
   }
 
   componentDidMount() {
@@ -42,7 +44,7 @@ class Game extends Component {
 
   handleGuess = (e) => {
     e.preventDefault();
-    const letter = this.state.guessValue
+    const letter = this.state.guessValue.toLowerCase();
     const wrongGuesses = [...this.state.wrongGuesses]
     const correct = [...this.state.correct]
     const wordLetters = [...this.state.wordLetters]
@@ -54,17 +56,14 @@ class Game extends Component {
         guessValue: ''
       })
     }
-
-    else if (this.state.wordLetters.includes(letter)) {
         // correct guess
+    else if (this.state.wordLetters.includes(letter)) {
         correct.push(letter)
         this.setState({
           guessValue: '',
           correct,
           repeat: '',
-
         })
-
 
         //check if game is won
           // get unique letters from original letters array (remove duplicates)
@@ -74,15 +73,17 @@ class Game extends Component {
             won: true
           })
         }
-
       // let checker = (arr, target) => target.every(v => arr.includes(v))
     }
 
-
       // wrong guess
     else if (!this.state.wordLetters.includes(letter)) {
-      console.log(letter, this.state.wordLetters.includes(letter))
       wrongGuesses.push(letter)
+      if (this.state.turns - 1 === 0) {
+        this.setState({
+          gameStatus: 'lost'
+        })
+      } else {
       this.setState((prevState, props) => {  //dependent on old state(counter)
         return {
         turns: prevState.turns - 1,
@@ -94,6 +95,8 @@ class Game extends Component {
       })
     }
 
+    }
+
   }
 
   handleChange = (e) => {
@@ -103,33 +106,67 @@ class Game extends Component {
     })
   }
 
+  newGame = () => {
+      this.props.history.push('/');
+  }
+
   render() {
-    const renderGame = null;
+    let renderGame = null;
+    if (!this.state.won && this.state.gameStatus !== 'lost') {
+
+
+    renderGame = (
+      <div>
+        <h1>You have {this.state.turns} turns left</h1>
+            <TheWord wordLetters={this.state.wordLetters} correct={this.state.correct} wrongGuesses={this.state.wrongGuesses}/>
+
+              <div className="guess-form">
+              <form onSubmit={this.handleGuess}>
+                {'Guess a letter'}
+                <input type='text'
+                maxLength="1"
+                        value={this.state.guessValue}
+                        onChange={this.handleChange}
+                />
+                <button type="submit"></button>
+                </form>
+
+                <ShowGuesses wrongGuesses={this.state.wrongGuesses}/>
+
+
+              </div>
+              </div>
+            )
+          } else if (this.state.won) {
+            renderGame = (
+              <div>
+               <h1>You won!</h1>
+              <Link to='/'>Play Again</Link>
+              </div>
+            )
+          } else if (this.state.gameStatus === 'lost') {
+            renderGame = (
+              <div>
+               <h1>You lost!</h1>
+               <Link to='/'>Play Again</Link>
+              </div>
+            )
+          }
 
     return (
-      <div>
-      { this.state.won ? <h1>You won</h1> : <h1>You have {this.state.turns} turns left</h1> }
-      <TheWord wordLetters={this.state.wordLetters} correct={this.state.correct} wrongGuesses={this.state.wrongGuesses}/>
+      <React.Fragment>
+      {renderGame}
 
-          <div className="guess-form">
-          <form onSubmit={this.handleGuess}>
-            {'Guess a letter'}
-            <input type='text'
-            maxLength="1"
-                    value={this.state.guessValue}
-                    onChange={this.handleChange}
-            />
-            <button type="submit"></button>
-            </form>
-
-            <ShowGuesses wrongGuesses={this.state.wrongGuesses}/>
-            {this.state.wordLetters.includes(this.state.guessValue) ? 'yes' : 'no'}
-
-          </div>
-      </div>
+      </React.Fragment>
     );
   }
 
 }
+
+
+// { this.state.won ?
+//   <h1>You won!</h1>
+//
+//    : <h1>You have {this.state.turns} turns left</h1> }
 
 export default Game;
