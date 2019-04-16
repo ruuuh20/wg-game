@@ -19,7 +19,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getWords();
+    // this.getWords();
 
     // fetch('http://localhost:3000')
     // .then(res => res)
@@ -42,13 +42,17 @@ class App extends Component {
 //   return body;
 // };
 
-getWords = async () => {
-  const results = await fetch('http://localhost:3000/words');
+getWords = async (difficulty) => {
+  // const diff = this.state.difficulty
+  const results = await fetch(`http://localhost:3000/words?difficulty=${difficulty}`);
   const words = await results.text()
 
-    console.log(words.split('\n')[2])  // works
+    console.log(words.split('\n'))  // works - data is array of many words
+    const wordsArr = words.split('\n')
+    const randomWord = wordsArr[Math.floor(Math.random() * wordsArr.length)];
+    console.log(randomWord)
     this.setState({
-      word: words.split('\n')[2],
+      word: randomWord
 
     })
 }
@@ -58,10 +62,17 @@ startGame = (e) => {
   this.setState({
     start: true
   })
+  this.getWords(this.state.difficulty);
 }
 
   onInputChange = (event) => {
     console.log(event)
+  }
+
+  handleDifficulty = (e) => {
+    this.setState({
+      difficulty: e.target.value
+    })
   }
 
   render() {
@@ -80,8 +91,18 @@ startGame = (e) => {
     return (
       <div className="App">
       <BrowserRouter>
-        <button onClick={this.startGame}>Get word </button>
-        {this.state.word}
+      <h2>{this.state.word, this.state.difficulty}</h2>
+        <button onClick={this.startGame}>Shuffle Words </button>
+        <select value={this.state.difficulty} onChange={this.handleDifficulty}>
+          {[...Array(10).keys()].map((n, i) => {
+            return (
+              <option key={i} value={n}>
+                {n}
+              </option>
+            );
+          })}
+        </select>
+
         <Logo />
         <Route path ='/play' render={props => <Game {...props} word={this.state.word} />}/>
         {renderGame}
