@@ -148,7 +148,7 @@ class Game extends Component {
             renderGame = (
               <div>
                <h1>You lost!</h1>
-               <Link to='/'>Play Again</Link>
+               <Link to='/' onClick={this.props.reset}>Play Again</Link>
               </div>
             )
           }
