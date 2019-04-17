@@ -2,7 +2,6 @@ import React from 'react';
 import LetterBlock from './LetterBlock'
 
 const TheWord = (props) => {
-  const handleClick = () => {};
 
   const split = props.wordLetters.map((letter, index) => {
     if (props.correct.includes(letter)) {
@@ -14,13 +13,10 @@ const TheWord = (props) => {
             <LetterBlock letter={"_"} key={index}/>
       )
     }
-  }
-
-  )
-
+  })
 
   return (
-    <div className="word-wrapper" onClick={handleClick}>
+    <div className="word-wrapper">
       {split}
     </div>
   );

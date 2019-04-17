@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import Game from './containers/Game'
 
 import './App.css';
 
-const api = "http://app.linkedin-reach.io/words"
+// const api = "http://app.linkedin-reach.io/words"
 
 class App extends Component {
   constructor() {
@@ -14,23 +14,20 @@ class App extends Component {
       word: '',
       difficulty: 1,
       start: false,
-
     }
   }
 
 
 getWords = async (difficulty) => {
-  // const diff = this.state.difficulty
   const results = await fetch(`http://localhost:3000/words?difficulty=${difficulty}`);
   const words = await results.text()
 
-    console.log(words.split('\n'))  // works - data is array of many words
+    console.log(words.split('\n'))  // data is array of many words
     const wordsArr = words.split('\n')
     const randomWord = wordsArr[Math.floor(Math.random() * wordsArr.length)];
     console.log(randomWord)
     this.setState({
       word: randomWord
-
     })
 }
 
@@ -43,9 +40,6 @@ startGame = (e) => {
   this.getWords(this.state.difficulty);
 }
 
-  onInputChange = (event) => {
-    console.log(event)
-  }
 
   handleDifficulty = (e) => {
     this.setState({
@@ -63,15 +57,13 @@ startGame = (e) => {
 
   render() {
     let renderGame = null;
-    // if (this.state.start) {
-    //   renderGame =
-    // }
-    if (this.state.start) {
-      renderGame = (
-        <div><h3 className="message">A secret word has been chosen - let's play</h3>
-              <Link className='play-link' to='/play'>Play</Link>
-        </div>
 
+    if (this.state.start && !this.state.intro) {
+      renderGame = (
+        <div>
+          <h3 className="message">A secret word has been chosen - let's play</h3>
+          <Link onClick={this.closeIntro} className='play-link' to='/play'>Play</Link>
+        </div>
     )
   }
   else {
@@ -95,7 +87,7 @@ startGame = (e) => {
   }
     return (
       <div className="App">
-              <Header start={this.state.start} difficulty={this.state.difficulty}/>
+          <Header start={this.state.start} difficulty={this.state.difficulty}/>
       <BrowserRouter>
         <Route exact path ='/play' render={props => <Game {...props} word={this.state.word} reset={this.reset} />}/>
         {renderGame}

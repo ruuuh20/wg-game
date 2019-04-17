@@ -4,14 +4,14 @@ const ShowGuesses = ({ wrongGuesses }) => {
   const renderWrong = (letters) => {
     return (
       letters.map(letter => {
-        return <h1>{letter}</h1>      
+        return <div className='wrong-guess'>{letter}</div>
       })
     )
   }
 
   return (
-    <div>
-    {renderWrong(wrongGuesses)}
+    <div className='wrong-guesses'>
+      {renderWrong(wrongGuesses)}
     </div>
 
   )

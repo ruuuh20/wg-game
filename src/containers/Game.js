@@ -17,30 +17,6 @@ class Game extends Component {
     gameStatus: ''
   }
 
-  componentDidMount() {
-    //shouldn't call setstate in here
-    // const wordLetters = this.props.word.split('')
-    // this.setState({
-    //   wordLetters: wordLetters
-    // })
-    // console.log(this.props + wordLetters)
-  }
-
-  startGame = (e) => {
-    e.preventDefault()
-
-    console.log(this.props.history)
-      // this.props.history.push('/play');
-
-  }
-
-  gameWon = () => {
-
-  }
-
-  gameLost = () => {
-
-  }
 
   handleGuess = (e) => {
     e.preventDefault();
@@ -86,15 +62,14 @@ class Game extends Component {
       } else {
       this.setState((prevState, props) => {  //dependent on old state(counter)
         return {
-        turns: prevState.turns - 1,
-        wrongGuesses,
-        guessValue: '',
-        repeat: '',
-        gameStatus: ''
-      }
+          turns: prevState.turns - 1,
+          wrongGuesses,
+          guessValue: '',
+          repeat: '',
+          gameStatus: ''
+        }
       })
-    }
-
+      }
     }
 
   }
@@ -106,14 +81,13 @@ class Game extends Component {
     })
   }
 
-  newGame = () => {
-      this.props.history.push('/');
-  }
+  // newGame = () => {
+  //     this.props.history.push('/');
+  // }
 
   render() {
     let renderGame = null;
     if (!this.state.won && this.state.gameStatus !== 'lost') {
-
 
     renderGame = (
       <div>
@@ -139,14 +113,14 @@ class Game extends Component {
             renderGame = (
               <div>
                <h1>You won!</h1>
-              <Link to='/'>Play Again</Link>
+              <Link className='play-link' to='/'>Play Again</Link>
               </div>
             )
           } else if (this.state.gameStatus === 'lost') {
             renderGame = (
               <div>
                <h1>You lost!</h1>
-               <Link to='/' onClick={this.props.reset}>Play Again</Link>
+               <Link className='play-link' to='/' onClick={this.props.reset}>Play Again</Link>
               </div>
             )
           }
@@ -154,17 +128,10 @@ class Game extends Component {
     return (
       <React.Fragment>
       {renderGame}
-
       </React.Fragment>
     );
   }
 
 }
-
-
-// { this.state.won ?
-//   <h1>You won!</h1>
-//
-//    : <h1>You have {this.state.turns} turns left</h1> }
 
 export default Game;
