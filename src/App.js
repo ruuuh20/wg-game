@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Logo from './components/Logo';
+import Header from './components/Header';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import Game from './containers/Game'
 
@@ -13,33 +13,11 @@ class App extends Component {
     this.state = {
       word: '',
       difficulty: 1,
-      start: false
+      start: false,
+
     }
   }
 
-  componentDidMount() {
-    // this.getWords();
-
-    // fetch('http://localhost:3000')
-    // .then(res => res)
-    // .then(console.log)
-    // const x = this.callBackendAPI()
-    // console.log(x)
-   // .then(res => this.setState({
-   //   data: res.data
-   // }))
-   // .then(res => console.log(res.data))
-   // .catch(err => console.log(err));
-  }
-
-
-//   callBackendAPI = async () => {
-//   const response = await fetch('http://localhost:3000/words');
-//   const body = await response.text();
-//   console.log(body)
-//
-//   return body;
-// };
 
 getWords = async (difficulty) => {
   // const diff = this.state.difficulty
@@ -59,7 +37,8 @@ getWords = async (difficulty) => {
 startGame = (e) => {
   e.preventDefault()
   this.setState({
-    start: true
+    start: true,
+    intro: false
   })
   this.getWords(this.state.difficulty);
 }
@@ -89,15 +68,16 @@ startGame = (e) => {
     // }
     if (this.state.start) {
       renderGame = (
-        <div><h3>A secret word has been chosen - let's play</h3>
-              <Link to='/play'>Play</Link>
+        <div><h3 className="message">A secret word has been chosen - let's play</h3>
+              <Link className='play-link' to='/play'>Play</Link>
         </div>
 
     )
-  } else {
+  }
+  else {
     renderGame = (
-      <div>
-      <div>Choose difficulty:
+      <div className='right-main'>
+      <div className="select">Choose difficulty:
         <select value={this.state.difficulty} onChange={this.handleDifficulty}>
           {[...Array(10).keys()].map((n, i) => {
             return (
@@ -107,22 +87,16 @@ startGame = (e) => {
             );
           })}
         </select>
-        </div>
+      </div>
         <button className='start-game' onClick={this.startGame}>Shuffle Words</button>
-        <h2>Choose a difficulty level and shuffle for a word</h2>
-
-
+        <h2 className='message'>Choose a difficulty level and shuffle to choose a word</h2>
       </div>
     )
   }
     return (
       <div className="App">
-              <Logo />
-              <h3>Difficulty level: {this.state.difficulty}</h3>
-
+              <Header start={this.state.start} difficulty={this.state.difficulty}/>
       <BrowserRouter>
-
-
         <Route exact path ='/play' render={props => <Game {...props} word={this.state.word} reset={this.reset} />}/>
         {renderGame}
       </BrowserRouter>
@@ -131,6 +105,4 @@ startGame = (e) => {
   }
 }
 
-
-// {this.state.start ? <Game {...this.state} startGame={this.startGame} /> : <h1>not started</h1>}
 export default App;

@@ -6,6 +6,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: 'Titillium Web', sans-serif;
+  background-color: #db914c;
+  color: #dde6ef;
 }
 
 code {

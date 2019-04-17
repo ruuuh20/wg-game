@@ -123,17 +123,15 @@ class Game extends Component {
               <div className="guess-form">
               <form onSubmit={this.handleGuess}>
                 {'Guess a letter'}
-                <input type='text'
-                maxLength="1"
+                <input className='letter-input'
+                        type='text'
+                        maxLength="1"
                         value={this.state.guessValue}
                         onChange={this.handleChange}
                 />
-                <button type="submit"></button>
-                </form>
-
+                <button type="submit">Enter</button>
+              </form>
                 <ShowGuesses wrongGuesses={this.state.wrongGuesses}/>
-
-
               </div>
               </div>
             )
