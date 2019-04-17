@@ -81,7 +81,7 @@ startGame = (e) => {
         </select>
       </div>
         <button className='start-game' onClick={this.startGame}>Shuffle Words</button>
-        <h2 className='message'>Choose a difficulty level and shuffle to choose a word</h2>
+        <h2 className='message'>To play, first select a difficulty level and shuffle for a secret word</h2>
       </div>
     )
   }
