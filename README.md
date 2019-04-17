@@ -1,3 +1,25 @@
+## Project
+
+This project is an implementation of a word guessing game (Hangman) - a user attempts to guess a word chosen by the "computer" within 6 guesses. THe frontend is built in React, while the server is built in Express. Users can choose a difficulty level of 1 through 10 and the app will randomly select a word after generating a collection of dictionary words provded by the LinkedIn-Reach API.
+
+The app demo can be found at https://guess-the-word-project.herokuapp.com.
+To run locally, please make sure to install npm and 'npm start'
+
+
+## Server Information
+
+This app calls to a server (Express) to request its dictionary words. The main reason for this implementation was because sending a API request from the React frontend was blocked. Repo link: https://github.com/ruuuh20/wg-game-api
+
+
+
+
+
+
+
+
+
+------
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
