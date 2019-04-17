@@ -19,7 +19,7 @@ class App extends Component {
 
 
 getWords = async (difficulty) => {
-  const results = await fetch(`http://localhost:3000/words?difficulty=${difficulty}`);
+  const results = await fetch(`https://mighty-brushlands-54041.herokuapp.com/words?difficulty=${difficulty}`);
   const words = await results.text()
 
     console.log(words.split('\n'))  // data is array of many words
