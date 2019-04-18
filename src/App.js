@@ -8,15 +8,12 @@ import './App.css';
 // const api = "http://app.linkedin-reach.io/words"
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      word: '',
-      difficulty: 1,
-      start: false,
-    }
-  }
 
+state = {
+    word: '',
+    difficulty: 1,
+    start: false,
+  }
 
 getWords = async (difficulty) => {
   const results = await fetch(`https://mighty-brushlands-54041.herokuapp.com/words?difficulty=${difficulty}`);
@@ -25,7 +22,7 @@ getWords = async (difficulty) => {
     console.log(words.split('\n'))  // data is array of many words
     const wordsArr = words.split('\n')
     const randomWord = wordsArr[Math.floor(Math.random() * wordsArr.length)];
-    console.log(randomWord)
+    // console.log(randomWord)
     this.setState({
       word: randomWord
     })
@@ -35,11 +32,9 @@ startGame = (e) => {
   e.preventDefault()
   this.setState({
     start: true,
-    intro: false
   })
   this.getWords(this.state.difficulty);
 }
-
 
   handleDifficulty = (e) => {
     this.setState({
@@ -58,15 +53,15 @@ startGame = (e) => {
   render() {
     let renderGame = null;
 
-    if (this.state.start && !this.state.intro) {
+    if (this.state.start) {
       renderGame = (
         <div>
           <h3 className="message">A secret word has been chosen - let's play</h3>
           <Link onClick={this.closeIntro} className='play-link' to='/play'>Play</Link>
         </div>
-    )
-  }
-  else {
+      )
+    }
+    else {
     renderGame = (
       <div className='right-main'>
       <div className="select">Choose difficulty:
@@ -84,10 +79,11 @@ startGame = (e) => {
         <h2 className='message'>To play, first select a difficulty level and shuffle for a secret word</h2>
       </div>
     )
-  }
+    }
+
     return (
       <div className="App">
-          <Header start={this.state.start} difficulty={this.state.difficulty}/>
+        <Header start={this.state.start} difficulty={this.state.difficulty}/>
       <BrowserRouter>
         <Route exact path ='/play' render={props => <Game {...props} word={this.state.word} reset={this.reset} />}/>
         {renderGame}

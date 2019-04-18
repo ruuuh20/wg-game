@@ -113,7 +113,7 @@ class Game extends Component {
             renderGame = (
               <div>
                <h1>You won!</h1>
-              <Link className='play-link' to='/'>Play Again</Link>
+              <Link className='play-link' to='/' onClick={this.props.reset}>Play Again</Link>
               </div>
             )
           } else if (this.state.gameStatus === 'lost') {
