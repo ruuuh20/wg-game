@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   startGame = (e) => {
-    e.preventDefault()
+    // e.preventDefault()
     this.setState({
       start: true,
     })
@@ -58,70 +58,54 @@ class App extends Component {
         <div>
           <h3 className="message">
             {" "}
-            A secret word has been chosen - let 's play
+            A secret word has been chosen
           </h3>{" "}
-          <Link
-            onClick={this.closeIntro}
-            className="play-link"
-            to="/play"
-          >
-            {" "}
-            Play{" "}
-          </Link>{" "}
+          
         </div>
       );
     } else {
       renderGame = (
-        <div className="right-main">
-          <div>Difficulty: </div>
-          <input type="range"
-              min="1"
-              max="18"
-              value={this.state.difficulty}
-              className="difficulty-slider"
-              onChange={this.handleDifficulty}
-              />
-          <button className="start-game" onClick={this.startGame}>
-            {" "}
-            Shuffle Words{" "}
-          </button>{" "}
-          <h2 className="message">
-            {" "}
-            To play, first select a difficulty level and shuffle for a
-            secret word{" "}
-          </h2>{" "}
-        </div>
+       ""
       );
     }
-    return ( <
-      div className = "App" >
-      <
-      Header start = {
-        this.state.start
-      }
-      difficulty = {
-        this.state.difficulty
-      }
-      /> <
-      BrowserRouter >
-      <
-      Route exact path = '/play'
-      render = {
-        props => < Game {
-          ...props
-        }
-        word = {
-          this.state.word
-        }
-        reset = {
-          this.reset
-        }
-        />}/ > {
-          renderGame
-        } <
-        /BrowserRouter> <
-        /div>
-      );
+    return (
+      <div className="App">
+        <Header
+          start={this.state.start}
+          difficulty={this.state.difficulty}
+        />{" "}
+        <BrowserRouter>
+        <Route exact path="/" render={() => {
+          return (
+            <div className="right-main">
+              <div className="choose-difficulty">Difficulty: </div>
+              <input
+                type="range"
+                min="1"
+                max="18"
+                value={this.state.difficulty}
+                className="difficulty-slider"
+                onChange={this.handleDifficulty}
+              />
+              <Link
+                onClick={this.startGame}
+                className="play-link"
+                to="/play"
+              >
+                
+                Play
+              </Link>
+            </div>
+          );
+        }} />
+          <Route exact path="/play" render={props => (
+              <Game {...props} word={this.state.word} reset={this.reset} />
+            )}
+          />{" "}
+          {renderGame}{" "}
+        </BrowserRouter>{" "}
+      </div>
+    );
     }
   }
 
