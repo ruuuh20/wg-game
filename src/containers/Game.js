@@ -14,7 +14,9 @@ class Game extends Component {
     correct: [],
     repeat: '',
     won: false,
-    gameStatus: ''
+    gameStatus: '',
+    currentUser: 1,
+    users: ['Chris', 'Dru']
   }
 
 
@@ -39,6 +41,7 @@ class Game extends Component {
           guessValue: '',
           correct,
           repeat: '',
+
         })
 
         //check if game is won
@@ -52,8 +55,12 @@ class Game extends Component {
       // let checker = (arr, target) => target.every(v => arr.includes(v))
     }
 
+
+
       // wrong guess
-    else if (!this.state.wordLetters.includes(letter)) {
+
+    else if (!this.state.wordLetters.includes(letter))  {
+        //lost
       wrongGuesses.push(letter)
       if (this.state.turns - 1 === 0) {
         this.setState({
@@ -66,13 +73,15 @@ class Game extends Component {
           wrongGuesses,
           guessValue: '',
           repeat: '',
-          gameStatus: ''
+          gameStatus: '',
+          currentUser: prevState.otherUser
         }
       })
       }
-    }
 
-  }
+      }
+
+  } 
 
   handleChange = (e) => {
     console.log(e.target.value)
@@ -81,18 +90,16 @@ class Game extends Component {
     })
   }
 
-  // newGame = () => {
-  //     this.props.history.push('/');
-  // }
-
   render() {
     let renderGame = null;
+  
     if (!this.state.won && this.state.gameStatus !== 'lost') {
 
     renderGame = (
       <div>
+        <h1>Current User: {this.state.currentUser}</h1>
         <h1>You have {this.state.turns} turns left</h1>
-            <TheWord wordLetters={this.state.wordLetters} correct={this.state.correct} wrongGuesses={this.state.wrongGuesses}/>
+            <TheWord wordLetters={this.state.wordLetters} correct={this.state.correct} gameStatus={this.state.gameStatus} />
 
               <div className="guess-form">
               <form onSubmit={this.handleGuess}>
@@ -109,18 +116,19 @@ class Game extends Component {
               </div>
               </div>
             )
-          } else if (this.state.won) {
+          } else if (this.state.won) { //won
             renderGame = (
               <div>
-               <h1>You won!</h1>
+               <h1>{this.state.currentUser} won!</h1>
               <Link className='play-link' to='/' onClick={this.props.reset}>Play Again</Link>
               </div>
             )
-          } else if (this.state.gameStatus === 'lost') {
+          } else if (this.state.gameStatus === 'lost') { //lost
             renderGame = (
               <div>
-               <h1>You lost!</h1>
+               <h1>{this.state.currentUser} lost!</h1>
                <Link className='play-link' to='/' onClick={this.props.reset}>Play Again</Link>
+                <TheWord wordLetters={this.state.wordLetters} correct={this.state.correct} gameStatus={this.state.gameStatus} />
               </div>
             )
           }

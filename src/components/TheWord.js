@@ -4,7 +4,12 @@ import LetterBlock from './LetterBlock'
 const TheWord = (props) => {
 
   const split = props.wordLetters.map((letter, index) => {
-    if (props.correct.includes(letter)) {
+    if (props.gameStatus === 'lost') {
+      return ( <
+        LetterBlock letter = {letter} key = {index} />
+      )
+    }
+    else if (props.correct.includes(letter)) {
       return (
             <LetterBlock letter={letter} key={index}/>
       )
