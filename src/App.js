@@ -18,6 +18,7 @@ class App extends Component {
   getWords = async (difficulty) => {
     const results = await fetch(`https://mighty-brushlands-54041.herokuapp.com/words?difficulty=${difficulty}`);
     const words = await results.text()
+    console.log("fetching")
 
     console.log(words.split('\n')) // data is array of many words
     const wordsArr = words.split('\n')
@@ -51,23 +52,7 @@ class App extends Component {
   }
 
   render() {
-    let renderGame = null;
-
-    if (this.state.start) {
-      renderGame = (
-        <div>
-          <h3 className="message">
-            {" "}
-            A secret word has been chosen
-          </h3>{" "}
-          
-        </div>
-      );
-    } else {
-      renderGame = (
-       ""
-      );
-    }
+    
     return (
       <div className="App">
         <Header
@@ -82,7 +67,7 @@ class App extends Component {
               <input
                 type="range"
                 min="1"
-                max="18"
+                max="10"
                 value={this.state.difficulty}
                 className="difficulty-slider"
                 onChange={this.handleDifficulty}
@@ -99,11 +84,12 @@ class App extends Component {
           );
         }} />
           <Route exact path="/play" render={props => (
+            this.state.word == '' ? "loading" : 
               <Game {...props} word={this.state.word} reset={this.reset} />
             )}
-          />{" "}
-          {renderGame}{" "}
-        </BrowserRouter>{" "}
+          />
+        
+        </BrowserRouter>
       </div>
     );
     }

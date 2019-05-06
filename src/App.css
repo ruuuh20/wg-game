@@ -27,6 +27,10 @@
   font-size: 2em;
 }
 
+.choose-difficulty {
+  font-size: 40px;
+}
+
 
 .message {
   font-size: 2em;
@@ -75,6 +79,7 @@ button.start-game {
 }
 
 .play-link {
+  display: block; 
   text-decoration: none;
   font-size: 4em;
   color: #ba8824;

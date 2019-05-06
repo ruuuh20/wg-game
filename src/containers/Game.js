@@ -14,9 +14,9 @@ class Game extends Component {
     correct: [],
     repeat: '',
     won: false,
-    gameStatus: '',
+    gameStatus: 'start',
     currentUser: 1,
-    users: ['Chris', 'Dru']
+    
   }
 
 
@@ -92,6 +92,7 @@ class Game extends Component {
 
   render() {
     let renderGame = null;
+  
   
     if (!this.state.won && this.state.gameStatus !== 'lost') {
 
