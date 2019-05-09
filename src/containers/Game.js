@@ -59,7 +59,6 @@ class Game extends Component {
     }
 
       // wrong guess
-
     else if (!this.state.wordLetters.includes(letter))  {
         //lost
       wrongGuesses.push(letter)
@@ -75,11 +74,10 @@ class Game extends Component {
           guessValue: '',
           repeat: '',
           gameStatus: '',
-          currentUser: prevState.otherUser
+          currentUser: prevState.currentUser === 1 ? this.state.currentUser = 2 : this.state.currentUser = 1
         }
       })
       }
-
       }
 
   } 
@@ -121,7 +119,7 @@ class Game extends Component {
               value={this.state.guessValue}
               onChange={this.handleChange}
             />
-            {/* <button type="submit">Enter</button> */}
+  
           </form>
         
         </div>

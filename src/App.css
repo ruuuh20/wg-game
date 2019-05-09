@@ -1,8 +1,6 @@
 .App {
   text-align: center;
-  /* margin: 0 45px; */
   padding: 12px;
-
     background-color: #1e3d61;
     height: 100vh;
 
@@ -18,7 +16,6 @@
 
 .right {
   text-align: right;
-
 }
 
 .select {
@@ -28,7 +25,6 @@
 .choose-difficulty {
   font-size: 40px;
 }
-
 
 .message {
   font-size: 2em;
@@ -83,26 +79,22 @@ button.start-game {
   color: #ba8824;
 }
 
-/* .guess-form {
-  font-size: 1.5em;
-} */
-
-
 .letter-input {
     font-size: 1.5em;
-    width: 3%;
-    height: 8%;
+    width: 5%;
     margin-top: 15px;
- 
 }
-
 
 .diagram-section {
   display: flex;
 }
 
 .diagram-section > * {
-  margin-top: -25px;
+  /* margin-top: -11px; */
   flex: 1;
   flex-basis: 100%;
+}
+
+.play-link {
+  font-size: 2em;
 }
