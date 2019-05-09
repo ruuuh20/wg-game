@@ -103,9 +103,9 @@ class Game extends Component {
 
     renderGame = (
       <div>
-        <h1>
+        <h2>
           Current User: {this.state.currentUser}
-        </h1>
+        </h2>
         <TheWord
           wordLetters={this.state.wordLetters}
           correct={this.state.correct}
