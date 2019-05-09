@@ -58,12 +58,12 @@ class App extends Component {
         <Header
           start={this.state.start}
           difficulty={this.state.difficulty}
-        />{" "}
+        />
         <BrowserRouter>
         <Route exact path="/" render={() => {
           return (
             <div className="right-main">
-              <div className="choose-difficulty">Difficulty: </div>
+              <div className="choose-difficulty">Difficulty: {this.state.difficulty}</div>
               <input
                 type="range"
                 min="1"
@@ -84,7 +84,7 @@ class App extends Component {
           );
         }} />
           <Route exact path="/play" render={props => (
-            this.state.word == '' ? "loading" : 
+            this.state.word === '' ? "loading" : 
               <Game {...props} word={this.state.word} reset={this.reset} />
             )}
           />

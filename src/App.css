@@ -1,7 +1,6 @@
 .App {
   text-align: center;
-  margin: 0 65px;
-  padding: 24px;
+  margin: 0 45px;
 
     background-color: #1e3d61;
     height: 100vh;
@@ -59,20 +58,20 @@ button.start-game {
 }
 
 .wrong-guesses {
-  margin: 80px auto;
+  margin: 35px auto;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
 .wrong-guess {
-  font-size: 3em;
+  font-size: 2em;
   /* margin:  */
 }
 
 .letter-block {
-  font-size: 7em;
-  width: 120px;
+  font-size: 3em;
+  width: 70px;
   /* height: 55px; */
   border-radius: 2px;
   border: 1px solid #94958b;
@@ -89,14 +88,22 @@ button.start-game {
   font-size: 2em;
 }
 
-.letter-input, form button {
-  padding: 14px;
 
-  margin-left: 12px;
+.letter-input {
+    font-size: 1.8em;
+    width: 8%;
+    height: 8%;
+    margin-top: 15px;
+ 
 }
 
-form button {
-  font-size: 12px;
-    color: #ba8824;
-    background-color: transparent
+
+
+.diagram-section {
+  display: flex;
+}
+
+.diagram-section > * {
+  flex: 1;
+  flex-basis: 100%;
 }

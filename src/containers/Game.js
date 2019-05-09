@@ -3,6 +3,9 @@ import GuessForm from '../components/GuessForm'
 import TheWord from '../components/TheWord';
 import ShowGuesses from '../components/ShowGuesses';
 import { Link } from 'react-router-dom';
+import Diagram from '../components/Diagram';
+
+import hangmanAttempts from "../components/HangmanAttempts";
 
 class Game extends Component {
 
@@ -55,8 +58,6 @@ class Game extends Component {
       // let checker = (arr, target) => target.every(v => arr.includes(v))
     }
 
-
-
       // wrong guess
 
     else if (!this.state.wordLetters.includes(letter))  {
@@ -83,6 +84,10 @@ class Game extends Component {
 
   } 
 
+  updateImage = () => {
+
+  }
+
   handleChange = (e) => {
     console.log(e.target.value)
     this.setState({
@@ -98,25 +103,30 @@ class Game extends Component {
 
     renderGame = (
       <div>
-        <h1>Current User: {this.state.currentUser}</h1>
-        <h1>You have {this.state.turns} turns left</h1>
-            <TheWord wordLetters={this.state.wordLetters} correct={this.state.correct} gameStatus={this.state.gameStatus} />
+        <h1>
+          Current User: {this.state.currentUser}
+        </h1>
+        <TheWord
+          wordLetters={this.state.wordLetters}
+          correct={this.state.correct}
+          gameStatus={this.state.gameStatus}
+        />
 
-              <div className="guess-form">
-              <form onSubmit={this.handleGuess}>
-                {'Guess a letter'}
-                <input className='letter-input'
-                        type='text'
-                        maxLength="1"
-                        value={this.state.guessValue}
-                        onChange={this.handleChange}
-                />
-                <button type="submit">Enter</button>
-              </form>
-                <ShowGuesses wrongGuesses={this.state.wrongGuesses}/>
-              </div>
-              </div>
-            )
+        <div className="guess-form">
+          <form onSubmit={this.handleGuess}>
+            <input
+              className="letter-input"
+              type="text"
+              maxLength="1"
+              value={this.state.guessValue}
+              onChange={this.handleChange}
+            />
+            {/* <button type="submit">Enter</button> */}
+          </form>
+        
+        </div>
+      </div>
+    );
           } else if (this.state.won) { //won
             renderGame = (
               <div>
@@ -136,7 +146,11 @@ class Game extends Component {
 
     return (
       <React.Fragment>
-      {renderGame}
+        {renderGame}
+        <div className="diagram-section">
+          <ShowGuesses wrongGuesses={this.state.wrongGuesses} />
+          {hangmanAttempts(this.state.turns)}
+        </div>
       </React.Fragment>
     );
   }
